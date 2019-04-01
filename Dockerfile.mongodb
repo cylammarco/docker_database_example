@@ -1,0 +1,2 @@
+FROM mongo:latest
+LABEL maintainer="MCL <c.y.lam@ljmu.ac.uk>"

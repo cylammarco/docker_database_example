@@ -1,0 +1,30 @@
+FROM alpine:latest
+LABEL maintainer="MCL <c.y.lam@ljmu.ac.uk>"
+
+# Update docker image
+RUN apk update && apk upgrade
+
+# Install toolchain
+RUN apk add --virtual build-dependencies \
+        build-base \
+        gcc \
+        wget \
+        git \
+    && apk add \
+        bash
+
+# Add time-zone data
+#ENV DEBIAN_FRONTEND noninteractive
+
+# backward compatible to 32bit kdb
+#RUN apk add gcc-multilib
+
+# install command line history tool
+#RUN apk add rlwrap
+
+# Copy source directory inside
+ADD q /root
+WORKDIR /root
+
+# start the kdb when container is created
+CMD /root/q/l32/q

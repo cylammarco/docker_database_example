@@ -1,0 +1,4 @@
+FROM postgres:latest
+LABEL maintainer="MCL <c.y.lam@ljmu.ac.uk>"
+
+RUN mkdir -p "$PGDATA" && chmod 700 "$PGDATA"

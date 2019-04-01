@@ -1,0 +1,72 @@
+version: "3"
+services:
+
+  postgres:
+    container_name: postgres_container
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.postgres
+    ports:
+      - "22002:5432"
+    environment:
+      - PGDATA=/var/lib/postgresql/data
+    volumes:
+      - ./temp_files/postgres_data:/var/lib/postgresql/data
+      - ./temp_files/raw_data:/data
+    networks:
+      database_test_net:
+        ipv4_address: 123.0.0.3
+
+  mongo:
+    container_name: mongo_container
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.mongodb
+    ports:
+      - "22003:27017"
+    volumes:
+      - ./temp_files/mongo_data:/data/db
+      - ./temp_files/raw_data:/data
+    networks:
+      database_test_net:
+        ipv4_address: 123.0.0.4
+
+  influx:
+    container_name: influx_container
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.influxdb
+    ports:
+      - "22004:8083"
+    volumes:
+      - ./temp_files/mongo_data:/data/db
+      - ./temp_files/raw_data:/data
+    networks:
+      database_test_net:
+        ipv4_address: 123.0.0.5
+
+#  timescale:
+#    container_name: timescale_container
+#    restart: always
+#    build:
+#      context: ./
+#      dockerfile: Dockerfile.timescaledb
+#    ports:
+#      - "22005:5432"
+#    volumes:
+#      - ./temp_files/raw_data:/data
+#      - ./temp_files/timescale_data:/var/lib/postgresql/data
+#    networks:
+#      database_test_net:
+#        ipv4_address: 123.0.0.6
+
+networks:
+  database_test_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 123.0.0.0/24
