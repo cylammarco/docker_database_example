@@ -8,6 +8,9 @@ Add user permission to execute the shell script
 Run the script and everything should get set up
 `./setup.sh`
 
+Running the shell script again will trigger a "factory reset", if you want to start the system again, run
+`docker-compose up`
+
 ## Example CSV data
 
 First three rows of the example CSV file of the WUMa lightcurve.
