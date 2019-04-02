@@ -1,3 +1,17 @@
+#!/bin/bash
+CURRENT_PATH=$(pwd)
+
+# Clean temporary directory
+if [ "sudo ls -d $CURRENT_PATH/temp_files/mongo_data" ]; then
+  sudo rm -rf $CURRENT_PATH/temp_files/mongo_data
+  echo "Removed MongoDB temporary files."
+fi
+
+if [ "sudo ls -d $CURRENT_PATH/temp_files/postgres_data" ]; then
+  sudo rm -rf $CURRENT_PATH/temp_files/postgres_data
+  echo "Removed PostgreSQL temporary files."
+fi
+
 sudo docker-compose up --force-recreate --build --no-start
 # DO NOT EVER USE THE PASSWORD ARGUMENT ON A PUBLIC-FACING COMPUTER
 
