@@ -26,7 +26,7 @@ sudo docker-compose up --force-recreate -d
 #docker start mongo_container
 #docker exec -it mongo_container bash -c "mongo 123.0.0.4"
 #docker start influx_container
-python csv_to_influxline.py
+python3 csv_to_influxline.py
 #sleep 20
 
 # Populate PostgreSQL with the text CSV
