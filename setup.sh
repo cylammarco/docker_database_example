@@ -12,7 +12,8 @@ if [ "sudo ls -d $CURRENT_PATH/temp_files/postgres_data" ]; then
   echo "Removed PostgreSQL temporary files."
 fi
 
-sudo docker-compose up --force-recreate --build --no-start
+sudo docker-compose build
+sudo docker-compose up --force-recreate -d
 # DO NOT EVER USE THE PASSWORD ARGUMENT ON A PUBLIC-FACING COMPUTER
 
 # Populate the MySQL database with the .sql
@@ -21,12 +22,12 @@ sudo docker-compose up --force-recreate --build --no-start
 #docker exec -it mysql_container bash -c "mysql -u root --password='0123456789' WUMa -e 'CREATE TABLE WUMa (MJD FLOAT, mag FLOAT, mag_err FLOAT) ENGINE=INNODB'"
 #docker exec -it mysql_container bash -c "mysqlimport --ignore-lines=1 --fields-terminated-by=',' -u root --password='0123456789' WUMa /data/WUMa.csv"
 
-docker start postgres_container
-docker start mongo_container
-docker exec -it mongo_container bash -c "mongo 123.0.0.4"
-docker start influx_container
+#docker start postgres_container
+#docker start mongo_container
+#docker exec -it mongo_container bash -c "mongo 123.0.0.4"
+#docker start influx_container
 python csv_to_influxline.py
-sleep 20
+#sleep 20
 
 # Populate PostgreSQL with the text CSV
 docker exec postgres_container bash -c "psql -U postgres -c \"CREATE DATABASE WUMa;\""
